@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.school.mapper.mzj.OrderManageMapper">
+    <!--插入信息-->
+    <insert id="addOrder">
+        INSERT INTO orders(
+        order_id,
+        provider_id,
+        add_user,
+        add_time,
+        state
+        )
+        VALUES
+        (
+        #{ds.orderId},
+        #{ds.providerId},
+        #{ds.addUser},
+        #{ds.addTime},
+        #{ds.state}
+        )
+    </insert>
+    <!--更新信息-->
+    <update id="updateOrder">
+        update orders
+        set
+        add_time=#{ds.addTime}
+        where
+        order_id = #{ds.orderId}
+    </update>
+    <!--删除数据-->
+    <delete id="deleteOrder">
+        delete from
+        orders
+        where
+        order_id = #{ds.orderId}
+    </delete>
+
+
+    <!--通过条件查找查找信息-->
+    <select id="getOrderInfoByName" resultType="com.cn.school.entity.mzj.DSOrder">
+        select
+        guid,
+        order_id as orderId,
+        provider_id as providerId,
+        add_user as addUser,
+        add_time as addTime,
+        state
+        from orders
+        where
+        add_user LIKE concat(concat('%',#{ds.addUser}),'%')
+    </select>
+    <!--查找所有信息-->
+    <select id="getAllOrdersInfo" resultType="com.cn.school.entity.mzj.DSOrder">
+        select
+        guid,
+        order_id as orderId,
+        provider_id as providerId,
+        add_user as addUser,
+        add_time as addTime,
+        state
+        from
+        orders
+    </select>
+</mapper>
